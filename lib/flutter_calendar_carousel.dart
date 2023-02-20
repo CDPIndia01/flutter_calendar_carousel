@@ -233,7 +233,7 @@ class CalendarCarousel<T extends EventInterface> extends StatefulWidget {
     this.showIconBehindDayText = false,
     this.pageScrollPhysics = const ScrollPhysics(),
     this.shouldShowTransform = true,
-    this.dividerColor
+    this.dividerColor,
   }) : super(key: key);
 
   @override
@@ -397,7 +397,7 @@ class _CalendarState<T extends EventInterface>
             weekdayTextStyle: widget.weekdayTextStyle,
             localeDate: _localeDate,
           ),
-            Divider(
+          Divider(
             color: widget.dividerColor,
             thickness:  1.5,
             indent:  3,
@@ -426,18 +426,18 @@ class _CalendarState<T extends EventInterface>
   }
 
   Widget getDefaultDayContainer(
-    bool isSelectable,
-    int index,
-    bool isSelectedDay,
-    bool isToday,
-    bool isPrevMonthDay,
-    TextStyle? textStyle,
-    TextStyle defaultTextStyle,
-    TextStyle? holidaydayTextStyle,
-    bool isNextMonthDay,
-    bool isThisMonthDay,
-    DateTime now,
-  ) {
+      bool isSelectable,
+      int index,
+      bool isSelectedDay,
+      bool isToday,
+      bool isPrevMonthDay,
+      TextStyle? textStyle,
+      TextStyle defaultTextStyle,
+      TextStyle? holidaydayTextStyle,
+      bool isNextMonthDay,
+      bool isThisMonthDay,
+      DateTime now,
+      ) {
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -454,7 +454,6 @@ class _CalendarState<T extends EventInterface>
                 isPrevMonthDay,
                 textStyle,
                 defaultTextStyle,
-                holidaydayTextStyle,
                 isNextMonthDay,
                 isThisMonthDay),
             child: Text(
@@ -468,6 +467,7 @@ class _CalendarState<T extends EventInterface>
                   isPrevMonthDay,
                   textStyle,
                   defaultTextStyle,
+                  holidaydayTextStyle,
                   isNextMonthDay,
                   isThisMonthDay,
                   now),
@@ -487,19 +487,19 @@ class _CalendarState<T extends EventInterface>
     bool isPrevMonthDay,
     TextStyle? textStyle,
     TextStyle defaultTextStyle,
-    TextStyle? holidaydayTextStyle,
+      TextStyle? holidaydayTextStyle,
     bool isNextMonthDay,
     bool isThisMonthDay,
     DateTime now,
   ) {
     // If day is in Multiple selection mode, get its color
     bool isMultipleMarked = widget.multipleMarkedDates?.isMarked(now) ?? false;
-     bool isPresentDayMarked = widget.presentDates?.isMarked(now) ?? false;
+    bool isPresentDayMarked = widget.presentDates?.isMarked(now) ?? false;
     bool isAbsentDayMarked = widget.absentDates?.isMarked(now) ?? false;
     bool isHolidayDayMarked = widget.holidayDates?.isMarked(now) ?? false;
     bool isOnLeaveDayMarked = widget.onLeaveDates?.isMarked(now) ?? false;
-      
-    /// to get colours
+
+
     Color? multipleMarkedColor = widget.multipleMarkedDates?.getColor(now);
     Color? PresentDayMarked = widget.presentDates?.getColor(now);
     Color? AbsentDayMarked = widget.absentDates?.getColor(now);
@@ -507,7 +507,6 @@ class _CalendarState<T extends EventInterface>
     Color? OnLeaveDayMarked = widget.onLeaveDates?.getColor(now);
 
     final markedDatesMap = widget.markedDatesMap;
-    print(' isToday  $isToday ${widget.todayBorderColor.toString()}');
     return Container(
       margin: EdgeInsets.all(widget.dayPadding),
       child: GestureDetector(
@@ -537,7 +536,7 @@ class _CalendarState<T extends EventInterface>
                         : RoundedRectangleBorder(
                             borderRadius:  BorderRadius.all( Radius.circular(4)),
                             side: BorderSide(
-                                width: 2,
+                              width: 2,
                               color: isSelectedDay
                                   ? widget.selectedDayBorderColor
                                   : isToday
@@ -556,10 +555,10 @@ class _CalendarState<T extends EventInterface>
 
                     // If day is in Multiple selection mode, apply a different color
                     : isMultipleMarked
-                         ? multipleMarkedColor :
-                        isPresentDayMarked ? PresentDayMarked :
-                            isAbsentDayMarked ? AbsentDayMarked :
-                                isOnLeaveDayMarked ? OnLeaveDayMarked
+                          ? multipleMarkedColor :
+                          isPresentDayMarked ? PresentDayMarked :
+                              isAbsentDayMarked ? AbsentDayMarked :
+                                  isOnLeaveDayMarked ? OnLeaveDayMarked
                         : widget.dayButtonColor,
             padding: EdgeInsets.all(widget.dayPadding),
           ),
@@ -680,12 +679,12 @@ class _CalendarState<T extends EventInterface>
                   DateTime now = DateTime(year, month, 1);
                   TextStyle? textStyle;
                   TextStyle defaultTextStyle;
-                  TextStyle? holidaydayTextStyle;      
+                  TextStyle? holidaydayTextStyle;
                   if (isPrevMonthDay && !widget.showOnlyCurrentMonthDate) {
                     now = now.subtract(Duration(days: _startWeekday - index));
                     textStyle = widget.prevDaysTextStyle;
                     defaultTextStyle = defaultPrevDaysTextStyle;
-                      holidaydayTextStyle = widget.holidaydayTextStyle;
+                    holidaydayTextStyle = widget.holidaydayTextStyle;
                   } else if (isThisMonthDay) {
                     now = DateTime(year, month, index + 1 - _startWeekday);
                     textStyle = isSelectedDay
@@ -698,14 +697,13 @@ class _CalendarState<T extends EventInterface>
                         : isToday
                             ? defaultTodayTextStyle
                             : defaultDaysTextStyle;
-                       holidaydayTextStyle = widget.holidaydayTextStyle;
+                    holidaydayTextStyle = widget.holidaydayTextStyle;
                   } else if (!widget.showOnlyCurrentMonthDate) {
                     now = DateTime(year, month, index + 1 - _startWeekday);
                     textStyle = widget.nextDaysTextStyle;
                     defaultTextStyle = defaultNextDaysTextStyle;
-                  } else {
                     holidaydayTextStyle = widget.holidaydayTextStyle;
-                  } else {
+                  }  else {
                     return Container();
                   }
                   final markedDatesMap = widget.markedDatesMap;
@@ -1185,8 +1183,8 @@ class _CalendarState<T extends EventInterface>
     return isSelectedDay && widget.selectedDayTextStyle != null
         ? widget.selectedDayTextStyle
         : isMultipleMarked
-            ? mutipleMarkedTextStyle :
-    isHolidayDates ? holidaydayTextStyle
+        ? mutipleMarkedTextStyle :
+          isHolidayDates ? holidaydayTextStyle
             : (_localeDate.dateSymbols.WEEKENDRANGE
                         .contains((index - 1 + firstDayOfWeek) % 7)) &&
                     !isSelectedDay &&
@@ -1261,7 +1259,7 @@ class _CalendarState<T extends EventInterface>
           isPrevMonthDay,
           textStyle,
           defaultTextStyle,
-        holidaydayTextStyle,
+          holidaydayTextStyle,
           isNextMonthDay,
           isThisMonthDay,
           now,
